@@ -116,6 +116,7 @@
     "typescript": "^4.4.3"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.8.0",
     "@coinbase/wallet-sdk": "^3.3.0",
     "@fontsource/ibm-plex-mono": "^4.5.1",
     "@fontsource/inter": "^4.5.1",
@@ -172,6 +173,7 @@
     "@web3-react/types": "8.0.20-beta.0",
     "@web3-react/url": "8.0.25-beta.0",
     "@web3-react/walletconnect": "8.0.36-beta.0",
+    "antd": "^5.0.1",
     "array.prototype.flat": "^1.2.4",
     "array.prototype.flatmap": "^1.2.4",
     "cids": "^1.0.0",

@@ -1,0 +1,52 @@
+.backgroundImg {
+  background: url("../../public/assets/background.png");
+}
+.containerImg {
+  background: url("../../public/assets/container.png");
+}
+.searchInput .ant-input {
+  background-color: black;
+  padding: 10px !important;
+}
+
+.buttonAll {
+  background: black;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin-right: 12px;
+  border-radius: 12px;
+  border: 0;
+}
+
+.buttonAll:hover {
+  background: black;
+}
+
+.ant-tabs-tab {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.ant-tabs-tab-active {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.ant-tabs-ink-bar {
+  position: absolute;
+  background: #ffffff;
+  pointer-events: none;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #ffffff !important;
+  font-weight: 500;
+}
+
+.uniswapSidebar {
+  background: url("../../public/assets/Rectangle.png");
+  border-radius: 30px;
+  border: 0;
+}
+
+.ant-card-body {
+  padding: 16px;
+}
