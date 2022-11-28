@@ -71,7 +71,7 @@ const PageTabs = () => {
   )
 }
 
-const Navbar = () => {
+const Navbar = ({ setTransactionLen, navDrop, navDropHistory }: { setTransactionLen: any, navDrop: any, navDropHistory: any }) => {
   const isNftPage = useIsNftPage()
 
   return (
@@ -109,7 +109,7 @@ const Navbar = () => {
                 </Box>
               )}
 
-              <Web3Status />
+              <Web3Status setTransactionLen={setTransactionLen} navDrop={navDrop} navDropHistory={navDropHistory} />
             </Row>
           </Box>
         </Box>

@@ -42,6 +42,9 @@ import Swap from './Swap'
 import { OpenClaimAddressModalAndRedirectToSwap, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import Tokens from './Tokens'
 import DashboardPage from './DashboardPage'
+import { imageDataHelper } from "../utils/helpers";
+import { activityInt, infoInt } from '../interface/appInterface';
+
 const TokenDetails = lazy(() => import('./TokenDetails'))
 const Vote = lazy(() => import('./Vote'))
 const NftExplore = lazy(() => import('nft/pages/explore'))
@@ -125,17 +128,54 @@ const LazyLoadSpinner = () => (
   </SpinnerSVG>
 )
 
+interface test {
+  key: Number
+}
+interface mainTest extends Array<test> { }
 export default function App() {
   const isLoaded = useFeatureFlagsIsLoaded()
   const nftFlag = useNftFlag()
+  const dateAct = new Date();
 
   const { pathname } = useLocation()
   const currentPage = getCurrentPageFromLocation(pathname)
   const isDarkMode = useIsDarkMode()
   const isExpertMode = useIsExpertMode()
   const [scrolledState, setScrolledState] = useState(false)
+  const [activitySum, setActivitySum] = useState(100);
+  const [activityMap, setActivityMap] = useState<activityInt>([{
+    key: 1,
+    heading: "Daily Login✅",
+    xp: "+100 XP",
+    image: imageDataHelper("uniswap"),
+    dateTime: `${dateAct.toString().slice(4, 25)} (LT)`,
+  }]);
+  const [infoMap, setInfoMap] = useState<infoInt>([{
+    key: "1",
+    heading: "Total transactions on Uniswap",
+    value: "20",
+  },
+  {
+    key: "2",
+    heading: "Total XPs earned",
+    value: "120",
+  }, {
+    key: "3",
+    heading: "Daily Login",
+    value: "100",
+  }])
+  const [connectWallet, setConnectWallet] = useState(false);
+  const [swapTrigger, setSwapTrigger] = useState(false);
+  const [accountAddress, setAccountAddress] = useState("");
+  const [timelineIcon, setTimelineIcon] = useState<mainTest>([]);
+  const [confettiOpen, setConfettiOpen] = useState(false)
+  const [sideOpen, setSideOpen] = useState(false)
+  const [transactionLen, setTransactionLen] = useState(0);
+  const [navDrop, setNavDrop] = useState(false);
+  const [navDropHistory, setNavDropHistory] = useState(false);
 
   useAnalyticsReporter()
+
 
   const scrollListener = (e: Event) => {
     if (window.scrollY > 0) {
@@ -144,6 +184,51 @@ export default function App() {
       setScrolledState(false)
     }
   }
+
+
+  useEffect(() => {
+    if (connectWallet) {
+      activityMap.push({
+        key: 2,
+        heading: "Wallet Connected  🎉",
+        xp: "+200 XP",
+        image: imageDataHelper("uniswap"),
+        dateTime: `${dateAct.toString().slice(4, 25)} (LT)`,
+      },)
+      setActivityMap(activityMap);
+
+      infoMap.push({
+        key: "4",
+        heading: "Wallet Connected",
+        value: "200",
+      })
+      setInfoMap(infoMap)
+      setActivitySum(activitySum + 200)
+
+    }
+  }, [connectWallet])
+
+  useEffect(() => {
+    if (swapTrigger) {
+      activityMap.push({
+        key: 3,
+        heading: "Swap Initiated ✅",
+        xp: "+200 XP",
+        image: imageDataHelper("uniswap"),
+        dateTime: `${dateAct.toString().slice(4, 25)} (LT)`,
+      },)
+      setActivityMap(activityMap);
+
+      infoMap.push({
+        key: "5",
+        heading: "Swap Inititated",
+        value: "200",
+      })
+      setInfoMap(infoMap)
+      setActivitySum(activitySum + 200)
+
+    }
+  }, [swapTrigger])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -178,11 +263,11 @@ export default function App() {
     <ErrorBoundary>
       <DarkModeQueryParamReader />
       <ApeModeQueryParamReader />
-      <DashboardPage />
+      <DashboardPage activityMap={activityMap} infoMap={infoMap} accountAddress={accountAddress} timelineIcon={timelineIcon} setTimelineIcon={setTimelineIcon} confettiOpen={confettiOpen} sideOpen={sideOpen} transactionLen={transactionLen} activitySum={activitySum} />
       <AppWrapper>
         <Trace page={currentPage}>
-          <HeaderWrapper scrolledState={scrolledState}>
-            <NavBar />
+          <HeaderWrapper scrolledState={scrolledState} style={{ zIndex: '900' }}>
+            <NavBar setTransactionLen={setTransactionLen} navDrop={navDrop} navDropHistory={navDropHistory} />
           </HeaderWrapper>
           <BodyWrapper>
             <Popups />
@@ -210,7 +295,7 @@ export default function App() {
 
                   <Route path="send" element={<RedirectPathToSwapOnly />} />
                   <Route path="swap/:outputCurrency" element={<RedirectToSwap />} />
-                  <Route path="swap" element={<Swap />} />
+                  <Route path="swap" element={<Swap setConnectWallet={setConnectWallet} setSwapTrigger={setSwapTrigger} setAccountAddress={setAccountAddress} timelineIcon={timelineIcon} setTimelineIcon={setTimelineIcon} setConfettiOpen={setConfettiOpen} setSideOpen={setSideOpen} setNavDrop={setNavDrop} setNavDropHistory={setNavDropHistory} />} />
 
                   <Route path="pool/v2/find" element={<PoolFinder />} />
                   <Route path="pool/v2" element={<PoolV2 />} />

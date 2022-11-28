@@ -61,6 +61,8 @@ import { computeFiatValuePriceImpact } from '../../utils/computeFiatValuePriceIm
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { computeRealizedPriceImpact, warningSeverity } from '../../utils/prices'
 import { supportedChainId } from '../../utils/supportedChainId'
+import TutorialTemplate from '../../templates/TutorialTemplate';
+import { data } from '../../data/dashboardData';
 
 const ArrowContainer = styled.div`
   display: inline-block;
@@ -140,13 +142,28 @@ function largerPercentValue(a?: Percent, b?: Percent) {
 
 const TRADE_STRING = 'SwapRouter'
 
-export default function Swap() {
+export default function Swap({ setConnectWallet, setSwapTrigger, setAccountAddress, timelineIcon, setTimelineIcon, setConfettiOpen, setSideOpen, setNavDrop, setNavDropHistory }: { setConnectWallet: any, setSwapTrigger: any, setAccountAddress: any, timelineIcon: any, setTimelineIcon: any, setConfettiOpen: any, setSideOpen: any, setNavDrop: any, setNavDropHistory: any }) {
   const navigate = useNavigate()
   const { account, chainId } = useWeb3React()
   const loadedUrlParams = useDefaultsFromURLSearch()
   const [newSwapQuoteNeedsLogging, setNewSwapQuoteNeedsLogging] = useState(true)
   const [fetchingSwapQuoteStartTime, setFetchingSwapQuoteStartTime] = useState<Date | undefined>()
-
+  const [currentStep, setCurrentStep] = useState(1);
+  const [accountAd, setAccountAd] = useState("");
+  useEffect(() => {
+    if (account) {
+      setConnectWallet(true);
+      console.log(account)
+    }
+    if (account && account.length > 0) {
+      setAccountAddress(account)
+      setAccountAd(account)
+    }
+    else {
+      setAccountAddress("");
+      setAccountAd("");
+    }
+  }, [account])
   // token warning stuff
   const [loadedInputCurrency, loadedOutputCurrency] = [
     useCurrency(loadedUrlParams?.[Field.INPUT]?.currencyId),
@@ -272,6 +289,11 @@ export default function Swap() {
     swapErrorMessage: undefined,
     txHash: undefined,
   })
+  useEffect(() => {
+    console.log(showConfirm)
+    if (showConfirm)
+      setSwapTrigger(true);
+  }, [showConfirm])
 
   const formattedAmounts = useMemo(
     () => ({
@@ -377,6 +399,7 @@ export default function Swap() {
         })
       })
       .catch((error) => {
+        console.log('Failed SWAP', showConfirm)
         setSwapState({
           attemptingTxn: false,
           tradeToConfirm,
@@ -508,7 +531,19 @@ export default function Swap() {
           onCancel={handleDismissTokenWarning}
           showCancel={true}
         />
-        <PageWrapper>
+        <PageWrapper style={{ position: 'relative' }}>
+          <TutorialTemplate
+            data={data.tutorial}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+            accountAd={accountAd}
+            timelineIcon={timelineIcon}
+            setTimelineIcon={setTimelineIcon}
+            setConfettiOpen={setConfettiOpen}
+            setSideOpen={setSideOpen}
+            setNavDrop={setNavDrop}
+            setNavDropHistory={setNavDropHistory}
+          />
           <SwapWrapper id="swap-page">
             <SwapHeader allowedSlippage={allowedSlippage} />
             <ConfirmSwapModal

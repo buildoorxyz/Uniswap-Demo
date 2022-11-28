@@ -1,9 +1,11 @@
 .backgroundImg {
-  background: url("../../public/assets/background.png");
+  background: url("assets/background.png");
 }
+
 .containerImg {
-  background: url("../../public/assets/container.png");
+  background: url("assets/container.png");
 }
+
 .searchInput .ant-input {
   background-color: black;
   padding: 10px !important;
@@ -42,7 +44,7 @@
 }
 
 .uniswapSidebar {
-  background: url("../../public/assets/Rectangle.png");
+  background: url("../assets/images/Rectangle.png");
   border-radius: 30px;
   border: 0;
 }

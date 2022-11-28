@@ -95,7 +95,7 @@ const Web3StatusConnectWrapper = styled.div<{ faded?: boolean }>`
   }
 `
 
-const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean; isNftActive?: boolean }>`
+const Web3StatusConnected = styled(Web3StatusGeneric) <{ pending?: boolean; isNftActive?: boolean }>`
   background-color: ${({ pending, theme }) => (pending ? theme.deprecated_primary1 : theme.deprecated_bg1)};
   border: 1px solid ${({ pending, theme }) => (pending ? theme.deprecated_primary1 : theme.deprecated_bg1)};
   color: ${({ pending, theme }) => (pending ? theme.deprecated_white : theme.deprecated_text1)};
@@ -107,7 +107,7 @@ const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean; isNft
     :focus {
       border: 1px solid
         ${({ pending, theme }) =>
-          pending ? darken(0.1, theme.deprecated_primary1) : darken(0.1, theme.deprecated_bg2)};
+    pending ? darken(0.1, theme.deprecated_primary1) : darken(0.1, theme.deprecated_bg2)};
     }
   }
 
@@ -170,10 +170,10 @@ const StyledConnectButton = styled.button`
   padding: 10px 8px 10px 12px;
 
   transition: ${({
-    theme: {
-      transition: { duration, timing },
-    },
-  }) => `${duration.fast} color ${timing.in}`};
+  theme: {
+    transition: { duration, timing },
+  },
+}) => `${duration.fast} color ${timing.in}`};
 
   :hover,
   :active,
@@ -285,7 +285,7 @@ function Web3StatusInner() {
   }
 }
 
-export default function Web3Status() {
+export default function Web3Status({ setTransactionLen, navDrop, navDropHistory }: { setTransactionLen: any, navDrop: any, navDropHistory: any }) {
   const { ENSName } = useWeb3React()
 
   const allTransactions = useAllTransactions()
@@ -310,7 +310,7 @@ export default function Web3Status() {
       <WalletModal ENSName={ENSName ?? undefined} pendingTransactions={pending} confirmedTransactions={confirmed} />
       <Portal>
         <span ref={walletRef}>
-          <WalletDropdown />
+          <WalletDropdown setTransactionLen={setTransactionLen} navDrop={navDrop} navDropHistory={navDropHistory} />
         </span>
       </Portal>
     </span>

@@ -5,22 +5,49 @@ import {
   BellOutlined,
   DoubleLeftOutlined,
   PlusCircleOutlined,
+  CheckCircleOutlined,
+  FlagOutlined,
 } from "@ant-design/icons";
-import { Avatar, Collapse, Image, Timeline, Typography } from "antd";
+import { ConfigProvider, Avatar, Collapse, Image, Typography } from "antd";
 import BasicButton from "../atoms/BasicButton";
 import BasicCard from "../atoms/BasicCard";
 import BasicInput from "../atoms/BasicInput";
 import BasicTabs from "../atoms/BasicTabs";
 import SideBarTemplate from "./SideBarTemplate";
-import TutorialTemplate from "./TutorialTemplate";
+import Timeline from '@mui/lab/Timeline';
+import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
+import TimelineConnector from '@mui/lab/TimelineConnector';
+import TimelineContent from '@mui/lab/TimelineContent';
+import TimelineDot from '@mui/lab/TimelineDot';
+import Confetti from 'react-confetti'
+import { pngImageDataHelper, imageDataHelper } from "../utils/helpers";
+import { useState, useEffect } from "react";
+import { useWindowSize } from 'react-use'
+// import styled from "styled-components";
 
-const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
+// const TimelineItem = styled.timeL`
+// &:before {
+//   display:none;
+// }
+// `
+{/* <CheckCircleOutlined
+style={{
+  background: "green",
+  color: "white",
+  fontSize: "32px",
+  borderRadius: "50%",
+  border: "0",
+}}
+/> */}
+
+const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityMap, accountAddress, timelineIcon, transactionLen, infoMap, activitySum }) => {
   if (label === "Uniswap") {
     const { card, collapse, info } = innerContent;
     return (
       <div>
         <BasicCard
-          className={`uniswapSidebar`}
+          style={{ background: `url(${pngImageDataHelper("Rectangle").src})` }}
           innerContent={
             <div>
               <Typography.Text
@@ -53,12 +80,13 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
         <Collapse
           style={{ marginTop: "20px" }}
           defaultActiveKey={[collapse.key]}
+          ghost
         >
           <Collapse.Panel header={collapse.heading} key={collapse.key}>
             <Typography.Text>{collapse.innerText}</Typography.Text>
           </Collapse.Panel>
         </Collapse>
-        <div style={{ marginTop: "22px" }}>
+        {accountAddress.length > 0 ? <div style={{ marginTop: "22px" }}>
           <p style={{ marginBottom: "16px" }}>
             <Typography.Text style={{ color: "#fff" }}>
               {"Connected Wallet"}{" "}
@@ -67,10 +95,10 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
           <p>
             <Avatar style={{ marginRight: "16px" }}>{"VJ"}</Avatar>
             <Typography.Text style={{ color: "#ffffff" }}>
-              {info.wallet}
+              {accountAddress}
             </Typography.Text>
           </p>
-          {info.metrics.map((metric) => (
+          {infoMap.map((metric) => (
             <p key={metric.key} style={{ marginTop: "15px" }}>
               <Typography.Text style={{ fontWeight: 500, color: "#ffffff" }}>
                 {metric.heading}
@@ -83,24 +111,61 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
                   color: "#ffffff",
                 }}
               >
-                {metric.value}
+                {metric.key == 1 ? transactionLen : metric.key == 2 ? activitySum : metric.value}
               </Typography.Text>
             </p>
           ))}
-        </div>
+        </div> : <></>}
       </div>
     );
   } else if (label === "Milestones") {
     const { timeline } = innerContent;
     return (
-      <Timeline>
+      // <ConfigProvider
+      //   theme={{
+      //     components: {
+      //       Timeline.Item: {
+      //         backgroundColor: '#00b96b',
+      //       },
+      //     },
+      //   }}>
+      <Timeline sx={{
+        [`& .${timelineItemClasses.root}:before`]: {
+          flex: 0,
+          padding: 0,
+        },
+      }}>
         {timeline.map((item) => (
-          <Timeline.Item key={item.key} dot={item.icon}>
-            <BasicCard
-              style={{ background: "rgb(31,31,31)", borderRadius: "10px" }}
+
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot>
+                {timelineIcon.find((it) => it == item.key) ? item.key == 7 ? <FlagOutlined
+                  style={{
+                    background: "#C916C2",
+                    color: "white",
+                    fontSize: "30px",
+                    borderRadius: "50%",
+                    border: "0",
+                    padding: "5px",
+                  }}
+                /> : <CheckCircleOutlined
+                  style={{
+                    background: "green",
+                    color: "white",
+                    fontSize: "32px",
+                    borderRadius: "50%",
+                    border: "0",
+                  }}
+                /> : item.icon}
+              </TimelineDot>
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>  <BasicCard
+              style={{ background: "rgb(31,31,31)", borderRadius: "10px", borderColor: 'black' }}
               innerContent={
                 <div>
-                  <Typography.Title level={4} style={{ color: "white" }}>
+                  <Typography.Title level={5} style={{ color: "white", marginTop: "0px" }}>
                     {item.heading}
                   </Typography.Title>
                   <Typography.Text style={{ color: "white", fontSize: "13px" }}>
@@ -108,14 +173,16 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
                   </Typography.Text>
                 </div>
               }
-            />
-          </Timeline.Item>
+            /></TimelineContent>
+          </TimelineItem>
+
         ))}
       </Timeline>
+      // </ConfigProvider >
     );
   } else if (label === "Activity") {
-    const { activites } = innerContent;
-    return activites.map((activity) => (
+    // const { activites } = innerContent;
+    return activityMap ? activityMap.map((activity) => (
       <BasicCard
         style={{
           background: "rgba(0,0,0,.3)",
@@ -149,7 +216,7 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
                   preview={false}
                 />
               </div>
-              <div style={{ marginTop: "10px" }}>
+              <div style={{ marginTop: "4%" }}>
                 <Typography.Text
                   style={{
                     fontSize: "12px",
@@ -163,7 +230,7 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
           </div>
         }
       />
-    ));
+    )) : <></>;
   } else if (label === "Help") {
     const { queries } = innerContent;
 
@@ -171,12 +238,13 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
       const query = queries.find((q) => q.key === showAnswer.questionKey);
       return (
         <BasicCard
+          style={{ background: 'rgb(0,0,0,0.01)', border: '0' }}
           innerContent={
             <div>
               <BasicButton
                 type="text"
                 innerContent={
-                  <Typography.Text>
+                  <Typography.Text style={{ color: 'white' }}>
                     <ArrowLeftOutlined />
                     {"Back"}
                   </Typography.Text>
@@ -188,19 +256,20 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
                   })
                 }
               />
-              <Typography.Title level={4}>{query.question}</Typography.Title>
-              <Typography.Text>{query.answer}</Typography.Text>
-              <p>
-                <BasicButton
-                  shape="square"
-                  innerContent={
-                    <>
-                      <ArrowUpOutlined />
-                      <p>{query.upVotes}</p>
-                    </>
-                  }
-                />
-                <BasicButton
+              <Typography.Title level={4} style={{ color: 'white' }}>{query.question}</Typography.Title>
+              <Typography.Text style={{ color: '#C2B8FF' }}>{query.answer}</Typography.Text>
+              {/* <div style={{ marginLeft: '83%', display: 'flex', justifyContent: 'space-between' }}> */}
+              {/* <button style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItemns: 'center', padding: '2px 5px', gap: '4px', width: '36px', height: '36px', border: '0.2px solid #787878', borderRadius: '4px', background: '#FFFFFF', marginRight: '10%', padding: '2px 5px' }}> <div>
+                <ArrowUpOutlined />
+                <div>{query.upVotes}</div>
+              </div>
+              </button>
+              <button style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItemns: 'center', padding: '2px 5px', gap: '4px', width: '40px', height: '36px', border: '0.2px solid #787878', borderRadius: '4px', background: '#3F3F3F', padding: '2px 11px' }}> <div>
+                <ArrowDownOutlined />
+                <div>{query.downVotes}</div>
+              </div>
+              </button> */}
+              {/* <BasicButton
                   shape="square"
                   innerContent={
                     <>
@@ -208,8 +277,8 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
                       <p>{query.downVotes}</p>
                     </>
                   }
-                />
-              </p>
+                /> */}
+              {/* </div> */}
             </div>
           }
         />
@@ -218,18 +287,18 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
 
     return (
       <div>
-        <BasicInput
+        {/* <BasicInput
           placeholder={`Search your query here`}
           className={`searchInput`}
           style={{
             background: "#000",
-            color: "#fff",
+            color: "white",
             borderRadius: "10px",
             marginBottom: "10px",
             border: "1px solid gray",
             padding: "15px",
           }}
-        />
+        /> */}
         {queries.map((query) => (
           <BasicCard
             key={query.key}
@@ -237,6 +306,7 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
               borderRadius: "15px",
               marginBottom: "15px",
               background: "#1f1f1f",
+              border: '0',
             }}
             innerContent={
               <div>
@@ -253,7 +323,7 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
                   }}
                 >
                   <BasicButton
-                    style={{ background: "white" }}
+                    style={{ background: "white", borderRadius: '4px' }}
                     onClick={() =>
                       setShowAnswer({
                         visible: true,
@@ -264,8 +334,18 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
                       <Typography.Text>{"View Answer"}</Typography.Text>
                     }
                   />
-                  <div>
-                    <BasicButton
+                  {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}> */}
+                  {/* <button style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItemns: 'center', padding: '2px 5px', gap: '4px', width: '36px', height: '36px', border: '0.2px solid #787878', borderRadius: '2px', background: '#FFFFFF', marginRight: '10%', padding: '2px 5px' }}> <div>
+                    <ArrowUpOutlined />
+                    <div>{query.upVotes}</div>
+                  </div>
+                  </button>
+                  <button style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItemns: 'center', padding: '2px 5px', gap: '4px', width: '40px', height: '36px', border: '0.2px solid #787878', borderRadius: '2px', background: '#3F3F3F', padding: '2px 11px' }}> <div>
+                    <ArrowDownOutlined />
+                    <div>{query.downVotes}</div>
+                  </div>
+                  </button> */}
+                  {/* <BasicButton
                       style={{ marginRight: "10px" }}
                       shape="square"
                       innerContent={
@@ -283,8 +363,9 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent }) => {
                           <p style={{ color: "#9d97a1" }}>{query.downVotes}</p>
                         </>
                       }
-                    />
-                  </div>
+                    /> */}
+
+                  {/* </div> */}
                 </div>
               </div>
             }
@@ -302,30 +383,45 @@ const DashboardTemplate = ({
   setIsSideBarOpen,
   showAnswer,
   setShowAnswer,
-  currentStep,
-  setCurrentStep,
+  activityMap,
+  accountAddress,
+  timelineIcon,
+  confettiOpen,
+  transactionLen,
+  infoMap,
+  activitySum,
 }) => {
   const { logo } = commonData;
   const { sideBar, tutorial } = data;
-
+  const { width, height } = useWindowSize()
   const items = sideBar.tabs.map((data) => ({
     ...data,
     children: (
       <TabChildren
         showAnswer={showAnswer}
         setShowAnswer={setShowAnswer}
+        activityMap={activityMap}
+        accountAddress={accountAddress}
+        timelineIcon={timelineIcon}
+        transactionLen={transactionLen}
+        activitySum={activitySum}
+        infoMap={infoMap}
         {...data}
       />
     ),
   }));
 
   return (
-    <div>
+    <div style={{ zIndex: '10000', fontFamily: 'Space Grotesk, sans-serif' }}>
+      {confettiOpen ? <Confetti width={width}
+        height={height} /> : <></>}
       <BasicButton
         onClick={() => setIsSideBarOpen(true)}
-        icon={<PlusCircleOutlined />}
+        // icon={<PlusCircleOutlined />}
         shape={"circle"}
         style={{
+          background: `url(${imageDataHelper("iconLogo").src})`,
+          backgroundSize: "47px 47px",
           position: "fixed",
           bottom: "40px",
           left: "30px",
@@ -337,9 +433,13 @@ const DashboardTemplate = ({
       <SideBarTemplate
         headerStyle={{
           background: "rgba(0, 0, 0, 0.7)",
+          boxShadow: "0px 4px 42px rgba(0, 0, 0, 0.9)",
+          backdropFilter: "blur(10px)"
         }}
         bodyStyle={{
           background: "rgba(0, 0, 0, 0.7)",
+          boxShadow: "0px 4px 42px rgba(0, 0, 0, 0.9)",
+          backdropFilter: "blur(10px)"
         }}
         title={
           <div
@@ -361,11 +461,13 @@ const DashboardTemplate = ({
                 style={{
                   cursor: "pointer",
                   marginRight: ".5rem",
+                  color: "#B8BBFF",
                 }}
               />
               <DoubleLeftOutlined
                 style={{
                   cursor: "pointer",
+                  color: '#B8BBFF',
                 }}
                 onClick={() => setIsSideBarOpen(false)}
               />
@@ -385,11 +487,7 @@ const DashboardTemplate = ({
           />
         }
       />
-      <TutorialTemplate
-        data={tutorial}
-        currentStep={currentStep}
-        setCurrentStep={setCurrentStep}
-      />
+
       {/* <iframe
         title={`dashboard`}
         src="https://app.uniswap.org/#/swap"

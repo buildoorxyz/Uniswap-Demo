@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 import { Z_INDEX } from 'theme/zIndex'
 
@@ -49,16 +49,21 @@ const WalletDropdownWrapper = styled.div`
   }
 `
 
-const WalletDropdown = () => {
+const WalletDropdown = ({ setTransactionLen, navDrop, navDropHistory }: { setTransactionLen: any, navDrop: any, navDropHistory: any }) => {
   const [menu, setMenu] = useState<MenuState>(MenuState.DEFAULT)
-  const walletDropdownOpen = useModalIsOpen(ApplicationModal.WALLET_DROPDOWN)
+  var walletDropdownOpen = useModalIsOpen(ApplicationModal.WALLET_DROPDOWN)
 
+  useEffect(() => {
+    if (navDropHistory)
+      setMenu(MenuState.TRANSACTIONS)
+    // console.log(navDrop, walletDropdownOpen)
+  }, [navDropHistory])
   return (
     <>
-      {walletDropdownOpen && (
+      {(walletDropdownOpen || navDrop) && (
         <WalletDropdownWrapper>
           <WalletWrapper>
-            {menu === MenuState.TRANSACTIONS && <TransactionHistoryMenu onClose={() => setMenu(MenuState.DEFAULT)} />}
+            {menu === MenuState.TRANSACTIONS && <TransactionHistoryMenu setTransactionLen={setTransactionLen} onClose={() => setMenu(MenuState.DEFAULT)} />}
             {menu === MenuState.LANGUAGE && <LanguageMenu onClose={() => setMenu(MenuState.DEFAULT)} />}
             {menu === MenuState.DEFAULT && <DefaultMenu setMenu={setMenu} />}
           </WalletWrapper>

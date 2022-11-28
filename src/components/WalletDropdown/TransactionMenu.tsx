@@ -120,7 +120,7 @@ const EmptyTransaction = styled.div`
   color: ${({ theme }) => theme.textSecondary};
 `
 
-export const TransactionHistoryMenu = ({ onClose }: { onClose: () => void }) => {
+export const TransactionHistoryMenu = ({ onClose, setTransactionLen }: { onClose: () => void, setTransactionLen: any }) => {
   const allTransactions = useAllTransactions()
   const { chainId } = useWeb3React()
   const dispatch = useAppDispatch()
@@ -134,6 +134,9 @@ export const TransactionHistoryMenu = ({ onClose }: { onClose: () => void }) => 
     const confirmed: Array<TransactionDetails> = []
     const pending: Array<TransactionDetails> = []
 
+    if (Object.values(allTransactions).length > 0) {
+      setTransactionLen(Object.values(allTransactions).length)
+    }
     const sorted = Object.values(allTransactions).sort((a, b) => b.addedTime - a.addedTime)
     sorted.forEach((transaction) => (transaction.receipt ? confirmed.push(transaction) : pending.push(transaction)))
 
