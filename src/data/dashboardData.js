@@ -345,20 +345,23 @@ export const data = {
           <CaretUpOutlined
             style={{
               position: "absolute",
-              left: "43%",
-              bottom: "29%",
+              left: "13rem",
+              bottom: "13rem",
               color: "white",
               fontSize: "4rem",
+              zIndex: '100'
             }}
           />
         ),
         cardStyles: {
           border: 0,
           position: "relative",
-          left: "12%",
-          top: "37px",
+          left: "3.5rem",
+          top: "2.5rem",
           borderRadius: ".75rem",
-          width: "24vw",
+          width: "24rem",
+          zIndex: '100'
+
         },
         highlightStyles: {
           background: "transparent",
@@ -370,9 +373,10 @@ export const data = {
           width: "60px",
           // top: "115px",
           top: '-1rem',
-          left: "-4%",
+          left: "-1.5rem",
           boxShadow: "0 0 0 30px rgba(217, 217, 217, .2)",
           padding: "9.65rem 14.5rem",
+          // zIndex: '100'
         },
       },
       {
@@ -384,11 +388,13 @@ export const data = {
           <CaretUpOutlined
             style={{
               position: "absolute",
-              left: "-8%",
-              top: "29%",
+              left: "-2rem",
+              top: "4rem",
               color: "white",
               fontSize: "4rem",
               transform: 'rotate(90deg)',
+              zIndex: '100'
+
             }}
           />
         ),
@@ -396,10 +402,11 @@ export const data = {
         cardStyles: {
           border: 0,
           position: "relative",
-          left: "-105%",
+          left: "-24rem",
           // top: "120px",
+          zIndex: '100',
           borderRadius: ".75rem",
-          width: "24vw",
+          width: "23rem",
         },
       },
       {
@@ -411,11 +418,12 @@ export const data = {
           <CaretUpOutlined
             style={{
               position: "absolute",
-              left: "-8%",
-              top: "75%",
+              left: "-2rem",
+              top: "10rem",
               color: "white",
               fontSize: "4rem",
               transform: 'rotate(90deg)',
+              zIndex: '100'
 
             }}
           />
@@ -423,35 +431,44 @@ export const data = {
         cardStyles: {
           border: 0,
           position: "relative",
-          left: "-105%",
+          left: "-24rem",
           top: '5rem',
           borderRadius: ".75rem",
-          width: "24vw",
+          width: "23rem",
+          zIndex: '100'
         },
       },
       {
         id: 4,
         step: "Step 4",
         heading: "Check the Paperwork",
-        info: "Expected tokens show the number of tokens your wallet will receive after a successful swap.Price Impact is the change in token price directly caused by your trade, make sure to not move the market. Network fee is also known as gas fees. It’s the amount of fees you pay for your transaction success.",
+        info: {
+          ul1: `𝐄𝐱𝐩𝐞𝐜𝐭𝐞𝐝 𝐭𝐨𝐤𝐞𝐧𝐬 show the number of tokens your wallet will receive after a successful swap.`,
+          ul2: "𝐏𝐫𝐢𝐜𝐞 𝐈𝐦𝐩𝐚𝐜𝐭 is the change in token price directly caused by your trade, make sure to not move the market.",
+          ul3: "𝐍𝐞𝐭𝐰𝐨𝐫𝐤 𝐟𝐞𝐞 is also known as gas fees. It’s the amount of fees you pay for your transaction success."
+        },
         icon: (
           <CaretUpOutlined
             style={{
               position: "absolute",
-              left: "97%",
-              top: "95%",
+              left: "25rem",
+              top: "18.5rem",
               color: "white",
               fontSize: "4rem",
+              zIndex: '100'
+
             }}
           />
         ),
         cardStyles: {
           border: 0,
           position: "relative",
-          left: "17%",
-          top: "15.5rem",
+          left: "6rem",
+          top: "21.5rem",
           borderRadius: ".75rem",
-          width: "24vw",
+          width: "23rem",
+          zIndex: '100'
+
         },
       },
       {
@@ -463,21 +480,25 @@ export const data = {
           <CaretUpOutlined
             style={{
               position: "absolute",
-              left: "-17%",
-              top: "121%",
+              left: "-4rem",
+              top: "17rem",
               color: "white",
               fontSize: "4rem",
               transform: 'rotate(90deg)',
+              zIndex: '100'
+
             }}
           />
         ),
         cardStyles: {
           border: 0,
           position: "relative",
-          left: "-113%",
+          left: "-26rem",
           top: "10rem",
           borderRadius: ".75rem",
-          width: "24vw",
+          width: "23rem",
+          zIndex: '100'
+
         },
       },
       {
@@ -489,20 +510,23 @@ export const data = {
           <CaretUpOutlined
             style={{
               position: "absolute",
-              right: "-127%",
-              top: "123%",
+              left: "49rem",
+              top: "16.5rem",
               color: "white",
               fontSize: "4rem",
+              zIndex: '100',
+
             }}
           />
         ),
         cardStyles: {
           border: 0,
           position: "relative",
-          left: "159%",
+          left: "39rem",
           top: "19.5rem",
           borderRadius: ".75rem",
-          width: "24vw",
+          width: "23rem",
+          zIndex: '100'
         },
       },
       {
@@ -514,21 +538,24 @@ export const data = {
           <CaretUpOutlined
             style={{
               position: "absolute",
-              left: "164%",
-              top: "-28%",
+              left: "38rem",
+              top: "-4rem",
               color: "white",
               fontSize: "4rem",
-              transform: 'rotate(90deg)'
+              transform: 'rotate(90deg)',
+              zIndex: '100'
             }}
           />
         ),
         cardStyles: {
           border: 0,
           position: "relative",
-          left: "68%",
+          left: "16rem",
           top: "-4rem",
           borderRadius: ".75rem",
-          width: "24vw",
+          width: "23rem",
+          zIndex: '100'
+
         },
       },
     ],

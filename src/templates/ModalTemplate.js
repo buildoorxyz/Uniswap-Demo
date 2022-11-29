@@ -55,14 +55,16 @@ export default function ModalTemplate({ openModal, setOpenModal, setConfettiOpen
           }} />
 
           <div style={{ fontWeight: '700', fontSize: '29.3px', textAlign: 'center' }}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
+            <Typography id="modal-modal-title" variant="h6" component="h2" style={{
+              fontFamily: 'Space Grotesk',
+            }}>
               You have won 100 XPs! 🎉
             </Typography>
           </div>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }} style={{ fontFamily: 'Space Grotesk', }}>
             Congratulations on your Uniswap exploration
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }} style={{ fontFamily: 'Space Grotesk', }}>
             Redeem XPs for NFTs, Tokens and Cool Schwags with these XPs exclusively on Buildoor!
           </Typography>
           <button style={{
@@ -84,7 +86,8 @@ export default function ModalTemplate({ openModal, setOpenModal, setConfettiOpen
             flexGrow: '0',
             color: 'white',
             cursor: 'pointer',
-            marginTop: '5%'
+            marginTop: '5%',
+            fontFamily: 'Space Grotesk',
           }} onClick={() => window.location = 'mailto:knock@buildoor.xyz'}>Share your feedback</button>
           <button style={{
             boxSizing: 'border-box',
@@ -105,7 +108,8 @@ export default function ModalTemplate({ openModal, setOpenModal, setConfettiOpen
             flexGrow: '0',
             color: 'white',
             cursor: 'pointer',
-            marginTop: '5%'
+            marginTop: '5%',
+            fontFamily: 'Space Grotesk',
           }} onClick={() => { window.location.reload() }}>Restart the Demo</button>
         </Box>
       </Modal>

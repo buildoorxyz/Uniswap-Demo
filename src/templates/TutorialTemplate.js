@@ -40,25 +40,41 @@ const TutorialTemplate = ({ data, currentStep, setCurrentStep, accountAd, timeli
 
   return (
     <>
-      {!openModal && currentStep != 8 ? <div style={currentStep == 1 ? { position: "absolute", zIndex: '1' } : { position: "absolute", zIndex: '100' }}>
+      {!openModal && currentStep != 8 ? <div style={{ position: "absolute" }}>
         {stepData.icon}
         <div style={stepData.highlightStyles} />
         <BasicCard
           style={stepData.cardStyles}
           innerContent={
             <div>
-              <Typography.Text>{stepData.step}</Typography.Text>
+              <Typography.Text style={{
+                fontFamily: 'Space Grotesk',
+              }}>{stepData.step}</Typography.Text>
               <Typography.Title
                 level={2}
                 style={{
                   marginTop: ".1rem",
                   marginBottom: ".1rem",
+                  fontFamily: 'Space Grotesk',
+
                 }}
               >
                 {stepData.heading}
               </Typography.Title>
-              <Typography.Text>{stepData.info}</Typography.Text>
-              <div className="flex justify-between mt-2">
+              {currentStep == 4 ? <ul style={{ listStyleType: 'circle' }}>
+                <li>{stepData.info.ul1}</li>
+                <li>{stepData.info.ul2}</li>
+                <li>{stepData.info.ul3}</li>
+              </ul> :
+                <Typography.Text style={{
+                  fontFamily: 'Space Grotesk',
+                }}>{stepData.info}</Typography.Text>
+              }
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginTop: '2%',
+              }} className="flex justify-between mt-2">
                 <BasicButton
                   className="pl-0"
                   type="text"
@@ -69,8 +85,24 @@ const TutorialTemplate = ({ data, currentStep, setCurrentStep, accountAd, timeli
                   </>
                   }
                 />
-                <BasicButton
-                  className="mr-4"
+                <button style={{
+                  boxSizing: 'border-box',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  padding: '12px 25px',
+                  width: '142px',
+                  height: '44px',
+                  background: '#FFFFFF',
+                  border: '1px solid rgba(0, 0, 0, 0.1)',
+                  boxShadow: '0px 0px 20px rgba(255, 0, 255, 0.2)',
+                  borderRadius: '8px',
+                  flex: 'none',
+                  order: '1',
+                  flexGrow: '0',
+                  cursor: 'pointer'
+                }}
                   onClick={() => {
 
 
@@ -94,10 +126,8 @@ const TutorialTemplate = ({ data, currentStep, setCurrentStep, accountAd, timeli
                     // if (currentStep == 6) {
                     //   setNavDrop(false);
                     // }
-                  }}
-                  type="primary"
-                  innerContent={<Typography.Text>{`Next ->`}</Typography.Text>}
-                />
+                  }}>{`Next ->`}</button>
+
               </div>
             </div>
           }

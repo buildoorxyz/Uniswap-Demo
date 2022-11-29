@@ -40,6 +40,7 @@ style={{
   border: "0",
 }}
 /> */}
+const { Panel } = Collapse;
 
 const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityMap, accountAddress, timelineIcon, transactionLen, infoMap, activitySum }) => {
   if (label === "Uniswap") {
@@ -53,6 +54,7 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityM
               <Typography.Text
                 style={{
                   fontWeight: 600,
+                  fontFamily: 'Space Grotesk',
                 }}
               >
                 {card.upperText}
@@ -62,6 +64,7 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityM
                   fontWeight: 700,
                   fontSize: "50px",
                   marginTop: "10px",
+                  fontFamily: 'Space Grotesk',
                   marginBottom: "12px",
                 }}
               >
@@ -70,6 +73,7 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityM
               <Typography.Text
                 style={{
                   fontWeight: 500,
+                  fontFamily: 'Space Grotesk',
                 }}
               >
                 {card.lowerText}
@@ -77,30 +81,44 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityM
             </div>
           }
         />
-        <Collapse
-          style={{ marginTop: "20px" }}
-          defaultActiveKey={[collapse.key]}
-          ghost
+        <ConfigProvider
+          theme={{
+            components: {
+              Collapse: {
+                color: '#00b96b',
+              },
+            },
+          }}
         >
-          <Collapse.Panel header={collapse.heading} key={collapse.key}>
-            <Typography.Text>{collapse.innerText}</Typography.Text>
-          </Collapse.Panel>
-        </Collapse>
+          <Collapse
+            style={{ marginTop: "20px", fontColor: "white", background: "linear-gradient(90deg, rgba(63, 94, 251, 1)0%, rgba(252, 70, 107, 1)100%)" }}
+            defaultActiveKey={collapse.key}
+            ghost
+          >
+            <Panel header={collapse.heading} key={collapse.key} style={{ color: "#ffffff" }}>
+              <Typography.Text style={{ color: "#ffffff", fontFamily: 'Space Grotesk', }}>{collapse.innerText}</Typography.Text>
+            </Panel>
+            {/* <Collapse.Panel header={collapse.heading} key={collapse.key} style={{ color: "white !important" }}>
+            </Collapse.Panel> */}
+          </Collapse>
+        </ConfigProvider>
+
         {accountAddress.length > 0 ? <div style={{ marginTop: "22px" }}>
           <p style={{ marginBottom: "16px" }}>
-            <Typography.Text style={{ color: "#fff" }}>
+            <Typography.Text style={{ color: "#fff", fontFamily: 'Space Grotesk', }}>
               {"Connected Wallet"}{" "}
             </Typography.Text>
           </p>
           <p>
-            <Avatar style={{ marginRight: "16px" }}>{"VJ"}</Avatar>
-            <Typography.Text style={{ color: "#ffffff" }}>
-              {accountAddress}
+            <Avatar src={pngImageDataHelper("avatar").src} style={{ marginRight: "8px" }}></Avatar>
+
+            <Typography.Text style={{ color: "#ffffff", fontFamily: 'Space Grotesk' }}>
+              {accountAddress.slice(0, 15) + "...." + accountAddress.slice(25)}
             </Typography.Text>
           </p>
           {infoMap.map((metric) => (
             <p key={metric.key} style={{ marginTop: "15px" }}>
-              <Typography.Text style={{ fontWeight: 500, color: "#ffffff" }}>
+              <Typography.Text style={{ fontWeight: 500, color: "#ffffff", fontFamily: 'Space Grotesk' }}>
                 {metric.heading}
               </Typography.Text>
               <Typography.Text
@@ -109,6 +127,7 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityM
                   fontWeight: 700,
                   fontSize: "20px",
                   color: "#ffffff",
+                  fontFamily: 'Space Grotesk',
                 }}
               >
                 {metric.key == 1 ? transactionLen : metric.key == 2 ? activitySum : metric.value}
@@ -165,10 +184,17 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityM
               style={{ background: "rgb(31,31,31)", borderRadius: "10px", borderColor: 'black' }}
               innerContent={
                 <div>
-                  <Typography.Title level={5} style={{ color: "white", marginTop: "0px" }}>
+                  <Typography.Title level={5} style={{
+                    color: "white", marginTop: "0px",
+                    fontFamily: 'Space Grotesk',
+                  }}>
                     {item.heading}
                   </Typography.Title>
-                  <Typography.Text style={{ color: "white", fontSize: "13px" }}>
+                  <Typography.Text style={{
+                    color: "white", fontSize: "13px",
+                    fontFamily: 'Space Grotesk',
+
+                  }}>
                     {item.innerText}
                   </Typography.Text>
                 </div>
@@ -193,7 +219,7 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityM
         innerContent={
           <div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography.Text style={{ color: "white" }}>
+              <Typography.Text style={{ color: "white", fontFamily: 'Space Grotesk' }}>
                 {activity.heading}
               </Typography.Text>
               <Typography.Text
@@ -201,6 +227,7 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityM
                   float: "right",
                   color: "#48DC02",
                   fontSize: "18px",
+                  fontFamily: 'Space Grotesk'
                 }}
               >
                 {activity.xp}
@@ -221,6 +248,7 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityM
                   style={{
                     fontSize: "12px",
                     color: "#dbdbdb",
+                    fontFamily: 'Space Grotesk'
                   }}
                 >
                   {activity.dateTime}
@@ -244,7 +272,10 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityM
               <BasicButton
                 type="text"
                 innerContent={
-                  <Typography.Text style={{ color: 'white' }}>
+                  <Typography.Text style={{
+                    color: 'white',
+                    fontFamily: 'Space Grotesk'
+                  }}>
                     <ArrowLeftOutlined />
                     {"Back"}
                   </Typography.Text>
@@ -256,8 +287,8 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityM
                   })
                 }
               />
-              <Typography.Title level={4} style={{ color: 'white' }}>{query.question}</Typography.Title>
-              <Typography.Text style={{ color: '#C2B8FF' }}>{query.answer}</Typography.Text>
+              <Typography.Title level={4} style={{ color: 'white', fontFamily: 'Space Grotesk' }}>{query.question}</Typography.Title>
+              <Typography.Text style={{ color: '#C2B8FF', fontFamily: 'Space Grotesk' }}>{query.answer}</Typography.Text>
               {/* <div style={{ marginLeft: '83%', display: 'flex', justifyContent: 'space-between' }}> */}
               {/* <button style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItemns: 'center', padding: '2px 5px', gap: '4px', width: '36px', height: '36px', border: '0.2px solid #787878', borderRadius: '4px', background: '#FFFFFF', marginRight: '10%', padding: '2px 5px' }}> <div>
                 <ArrowUpOutlined />
@@ -305,13 +336,13 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityM
             style={{
               borderRadius: "15px",
               marginBottom: "15px",
-              background: "#1f1f1f",
+              background: "black",
               border: '0',
             }}
             innerContent={
               <div>
                 <p>
-                  <Typography.Text style={{ color: "white" }}>
+                  <Typography.Text style={{ color: "white", fontFamily: 'Space Grotesk' }}>
                     {query.question}
                   </Typography.Text>
                 </p>
@@ -331,7 +362,7 @@ const TabChildren = ({ showAnswer, setShowAnswer, label, innerContent, activityM
                       })
                     }
                     innerContent={
-                      <Typography.Text>{"View Answer"}</Typography.Text>
+                      <Typography.Text style={{ fontFamily: 'Space Grotesk' }}>{"View Answer"}</Typography.Text>
                     }
                   />
                   {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}> */}
@@ -432,12 +463,12 @@ const DashboardTemplate = ({
       />
       <SideBarTemplate
         headerStyle={{
-          background: "rgba(0, 0, 0, 0.7)",
+          background: "black",
           boxShadow: "0px 4px 42px rgba(0, 0, 0, 0.9)",
           backdropFilter: "blur(10px)"
         }}
         bodyStyle={{
-          background: "rgba(0, 0, 0, 0.7)",
+          background: "black",
           boxShadow: "0px 4px 42px rgba(0, 0, 0, 0.9)",
           backdropFilter: "blur(10px)"
         }}
@@ -481,7 +512,7 @@ const DashboardTemplate = ({
         key={"dashboard sidebar"}
         innerContent={
           <BasicTabs
-            style={{ color: "gray" }}
+            style={{ color: "#ffffff" }}
             items={items}
             defaultActiveKey={items.length ? items[0]?.key : null}
           />
