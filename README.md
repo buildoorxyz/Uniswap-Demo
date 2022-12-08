@@ -45,7 +45,7 @@ Layovers POC is completed, now there are following major developments in pipelin
 
 ### Notifications with Push Protocol 
 
-Notifications will be delivered to all the users whenever a new immerisve experience or activity like daily login, feature engagement is available to explore.  
+Notifications will be delivered to all the users whenever a new immersive experience or activity like daily login, feature engagement is available to explore.  
 
 ### Privacy focused Wallet based User Journey Analytics
 
@@ -61,7 +61,7 @@ User-journey analytics will be stored in file-coin storage. Dapps / products wil
 
 ### Dashboard Development 
 
-Analytics dashboard will contain all the insights recorded dusring user journey. It will help products / dapps understand user behaviour and optimize immersive experience to simplify their product. 
+Analytics dashboard will contain all the insights recorded during user journey. It will help products / dapps understand user behaviour and optimize immersive experience to simplify their product. 
 
 
 
