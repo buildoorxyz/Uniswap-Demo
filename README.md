@@ -10,6 +10,8 @@ It will be further backed by powerful analytics to track User behavior and journ
 
 Visit: https://splendid-creponne-42efaf.netlify.app/#/swap
 
+Demo Video: https://www.youtube.com/watch?v=u468nxHMaSY
+
 Currently, user must connect a web3 wallet in order to proceed further with the immersive experience. 
 
 Skip button is not functional because it doesn't serve the purpose of layovers POC at this point. It will be functional in the main product / MVP.  
